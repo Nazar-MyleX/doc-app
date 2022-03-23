@@ -1,13 +1,18 @@
 import styled from '@emotion/styled'
+import {useEffect, useState} from 'react'
 import {useForm} from 'react-hook-form'
+import {Document, Page, pdfjs} from 'react-pdf'
+import axios from 'axios'
+
 import CloudComputingIcon from './components/CloudComputingIcon'
 import DownloadIcon from './components/DownloadIcon'
 import DraftIcon from './components/DraftIcon'
 import Input from './components/Input'
 import Label from './components/Label'
-import MyDocument from './components/MyDocument'
+import RefreshIcon from './components/RefreshIcon';
 import Spacing from './components/Spacing'
-import {PDFDownloadLink, PDFViewer} from '@react-pdf/renderer';
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
 const Container = styled.div`
   display: flex;
@@ -71,8 +76,53 @@ const IconsWrapper = styled.div`
   margin-top: 150px;
 `
 
+const PDFViewerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 20px;
+`
+
 const App = () => {
-    const {register, handleSubmit, watch} = useForm()
+    const {register, watch} = useForm()
+    const [file, setFile] = useState(null)
+
+    const fetchFile = async () => {
+        const {data} = await axios.post(`${process.env.REACT_APP_API_URL}/pdf`, watch())
+        setFile(data)
+    }
+
+    const downloadPDF = (data) => {
+        const base64ToArrayBuffer = (data) => {
+            const bString = window.atob(data)
+            const bLength = bString.length
+            const bytes = new Uint8Array(bLength)
+            for (let i = 0; i < bLength; i++) {
+                const ascii = bString.charCodeAt(i)
+                bytes[i] = ascii
+            }
+            return bytes
+        }
+
+        const bufferArray = base64ToArrayBuffer(data)
+        const blobStore = new Blob([bufferArray], {type: 'application/pdf'})
+        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+            window.navigator.msSaveOrOpenBlob(blobStore)
+            return;
+        }
+        const objectURL = window.URL.createObjectURL(blobStore);
+        const link = document.createElement('a')
+        document.body.appendChild(link);
+        link.href = objectURL
+        link.download = 'file.pdf'
+        link.click()
+        window.URL.revokeObjectURL(data)
+        link.remove()
+    }
+
+    useEffect(() => {
+        fetchFile()
+    }, [])
 
     return (
         <Container>
@@ -132,9 +182,14 @@ const App = () => {
                     </DragDropText>
                 </DragDropWrapper>
             </InputList>
-            <PDFViewer width={805} height={1037} showToolbar={false} style={{border: 'none'}}>
-                <MyDocument data={watch()}/>
-            </PDFViewer>
+            <PDFViewerWrapper>
+                <div onClick={fetchFile}>
+                    <RefreshIcon/>
+                </div>
+                <Document file={`data:application/pdf;base64,${file}`}>
+                    <Page pageNumber={1} width={805} height={1037}/>
+                </Document>
+            </PDFViewerWrapper>
             <InputList>
                 <Column>
                     <Label text="COD"/>
@@ -170,11 +225,9 @@ const App = () => {
                 </Column>
                 <IconsWrapper>
                     <DraftIcon/>
-                    <PDFDownloadLink document={<MyDocument data={watch()} />} fileName="test.pdf">
-                        {({blob, url, loading, error}) =>
-                            loading ? 'Loading document...' : <DownloadIcon/>
-                        }
-                    </PDFDownloadLink>
+                    <div onClick={() => downloadPDF(file)}>
+                        <DownloadIcon/>
+                    </div>
                 </IconsWrapper>
             </InputList>
         </Container>
