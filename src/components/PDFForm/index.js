@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {Document, Page, pdfjs} from 'react-pdf';
 import CloudComputingIcon from '../icons/CloudComputingIcon';
@@ -17,16 +17,9 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 const PDFForm = () => {
     const {register, watch} = useForm()
     const [file, setFile] = useState(null)
-    const shipperAddressRef = useRef(null)
-    const receiverAddressRef = useRef(null)
 
     const fetchFile = async () => {
-        const requestData = {
-            ...watch(),
-            shipperAddress: shipperAddressRef.current.value,
-            receiverAddress: receiverAddressRef.current.value,
-        }
-        const {data} = await axios.post(`${process.env.REACT_APP_API_URL}/pdf`, requestData)
+        const {data} = await axios.post(`${process.env.REACT_APP_API_URL}/pdf`, watch())
         setFile(data)
     }
 
@@ -58,25 +51,9 @@ const PDFForm = () => {
         link.remove()
     }
 
-    const handleTextArea = (ref) => {
-        if (ref && ref.current) {
-            ref.current.style.height = '0px'
-            const scrollHeight = ref.current.scrollHeight
-            ref.current.style.height = scrollHeight + 'px'
-        }
-    }
-
     useEffect(() => {
         fetchFile()
     }, [])
-
-    useEffect(() => {
-        handleTextArea(shipperAddressRef)
-    }, [watch('shipperAddress')])
-
-    useEffect(() => {
-        handleTextArea(receiverAddressRef)
-    }, [watch('receiverAddress')])
 
     return (
         <Container>
@@ -100,11 +77,11 @@ const PDFForm = () => {
                     </Row>
                     <Row justifyContent="space-between">
                         <Label text="Address"/>
-                        <TextArea ref={shipperAddressRef} width="178px" maxLength={34}/>
+                        <TextArea {...register('shipperAddress')} width="178px" maxLength={34}/>
                     </Row>
                     <Row justifyContent="space-between">
                         <Label text="PO/PU"/>
-                        <Input {...register('shipperPOPU')} width="178px" height="28px"/>
+                        <TextArea {...register('shipperPOPU')} width="178px" maxLength={34}/>
                     </Row>
                     <Spacing/>
                     <Row justifyContent="space-between">
@@ -113,7 +90,7 @@ const PDFForm = () => {
                     </Row>
                     <Row justifyContent="space-between">
                         <Label text="Address"/>
-                        <TextArea ref={receiverAddressRef} width="178px" maxLength={34}/>
+                        <TextArea {...register('receiverAddress')} width="178px" maxLength={34}/>
                     </Row>
                     <Row justifyContent="space-between">
                         <Label text="PO/PU"/>
