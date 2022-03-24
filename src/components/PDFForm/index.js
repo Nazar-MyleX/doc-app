@@ -127,7 +127,7 @@ const PDFForm = () => {
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    rowGap: '46px',
+                    rowGap: '20px',
                 }}>
                     <Column>
                         <Label text="Pick Up Comments"/>
@@ -142,7 +142,7 @@ const PDFForm = () => {
                 </div>
             </Sidebar>
             <Document file={`data:application/pdf;base64,${file}`}>
-                <Page pageNumber={1} width={805} height={1037}/>
+                <Page pageNumber={1} height={869} />
             </Document>
             <Sidebar>
                 <InputList width={178}>
@@ -150,7 +150,6 @@ const PDFForm = () => {
                         <Label text="COD"/>
                         <Input {...register('cod')} width="187px" height="43px"/>
                     </Column>
-                    <Spacing marginTop="24px"/>
                     <Column>
                         <Label text="Name"/>
                         <Input {...register('name')} width="187px" height="28px"/>
@@ -184,7 +183,7 @@ const PDFForm = () => {
                     <div onClick={fetchFile}>
                         <RefreshIcon/>
                     </div>
-                    <DraftIcon width={113} height={113} color="white" />
+                    <DraftIcon width={50} height={50} color="white" />
                     <div onClick={() => downloadPDF(file)}>
                         <DownloadIcon/>
                     </div>

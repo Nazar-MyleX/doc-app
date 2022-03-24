@@ -7,7 +7,7 @@ export const Container = styled.div`
   height: 100%;
   width: 100%;
   background: linear-gradient(69.92deg, #1089BC 13.76%, #042330 140.51%);
-  padding: 32px 61px 48px 26px;
+  padding: 32px 61px 37px 26px;
 `
 
 export const InputList = styled.div`
@@ -58,7 +58,7 @@ export const IconsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  row-gap: 50px;
+  row-gap: 25px;
 `
 
 export const Sidebar = styled.div`
