@@ -21,7 +21,12 @@ const PDFForm = () => {
     const receiverAddressRef = useRef(null)
 
     const fetchFile = async () => {
-        const {data} = await axios.post(`${process.env.REACT_APP_API_URL}/pdf`, watch())
+        const requestData = {
+            ...watch(),
+            shipperAddress: shipperAddressRef.current.value,
+            receiverAddress: receiverAddressRef.current.value,
+        }
+        const {data} = await axios.post(`${process.env.REACT_APP_API_URL}/pdf`, requestData)
         setFile(data)
     }
 
@@ -95,7 +100,7 @@ const PDFForm = () => {
                     </Row>
                     <Row justifyContent="space-between">
                         <Label text="Address"/>
-                        <TextArea {...register('shipperAddress')} ref={shipperAddressRef} width="178px" maxLength={34}/>
+                        <TextArea ref={shipperAddressRef} width="178px" maxLength={34}/>
                     </Row>
                     <Row justifyContent="space-between">
                         <Label text="PO/PU"/>
@@ -108,8 +113,7 @@ const PDFForm = () => {
                     </Row>
                     <Row justifyContent="space-between">
                         <Label text="Address"/>
-                        <TextArea {...register('shipperAddress')} ref={receiverAddressRef} width="178px"
-                                  maxLength={34}/>
+                        <TextArea ref={receiverAddressRef} width="178px" maxLength={34}/>
                     </Row>
                     <Row justifyContent="space-between">
                         <Label text="PO/PU"/>
@@ -142,7 +146,7 @@ const PDFForm = () => {
                 </div>
             </Sidebar>
             <Document file={`data:application/pdf;base64,${file}`}>
-                <Page pageNumber={1} height={869} />
+                <Page pageNumber={1} height={869}/>
             </Document>
             <Sidebar>
                 <InputList width={178}>
@@ -183,7 +187,7 @@ const PDFForm = () => {
                     <div onClick={fetchFile}>
                         <RefreshIcon/>
                     </div>
-                    <DraftIcon width={50} height={50} color="white" />
+                    <DraftIcon width={50} height={50} color="white"/>
                     <div onClick={() => downloadPDF(file)}>
                         <DownloadIcon/>
                     </div>
