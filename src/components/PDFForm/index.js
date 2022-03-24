@@ -1,16 +1,15 @@
-import axios from 'axios';
-import {useEffect, useState} from 'react';
-import {useForm} from 'react-hook-form';
-import {Document, Page, pdfjs} from 'react-pdf';
-import CloudComputingIcon from '../icons/CloudComputingIcon';
-import DownloadIcon from '../icons/DownloadIcon';
-import DraftIcon from '../icons/DraftIcon';
-import RefreshIcon from '../icons/RefreshIcon';
-import Input from '../Input';
-import Label from '../Label';
-import Spacing from '../Spacing';
-import TextArea from '../TextArea';
-import {Container, Column, DragDropText, DragDropWrapper, IconsWrapper, InputList, Sidebar, Row} from './styles';
+import axios from 'axios'
+import {useEffect, useState} from 'react'
+import {useForm} from 'react-hook-form'
+import {Document, Page, pdfjs} from 'react-pdf'
+import CloudComputingIcon from '../icons/CloudComputingIcon'
+import DownloadIcon from '../icons/DownloadIcon'
+import DraftIcon from '../icons/DraftIcon'
+import RefreshIcon from '../icons/RefreshIcon'
+import Input from '../Input'
+import Label from '../Label'
+import TextArea from '../TextArea'
+import {Container, Column, DragDropText, DragDropWrapper, IconsWrapper, InputList, Sidebar, Row} from './styles'
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
@@ -41,7 +40,7 @@ const PDFForm = () => {
             window.navigator.msSaveOrOpenBlob(blobStore)
             return;
         }
-        const objectURL = window.URL.createObjectURL(blobStore);
+        const objectURL = window.URL.createObjectURL(blobStore)
         const link = document.createElement('a')
         document.body.appendChild(link);
         link.href = objectURL
@@ -58,45 +57,44 @@ const PDFForm = () => {
     return (
         <Container>
             <Sidebar>
-                <InputList width={280}>
-                    <Column>
+                <InputList>
+                    <Column width="259px">
                         <Label text="Carrier"/>
                         <Input {...register('carrier')} width="100%" height="50px"/>
                     </Column>
-                    <Row justifyContent="end">
+                    <Row width="259px" justifyContent="end">
                         <Label text="Weight"/>
                         <Input {...register('weight')} width="90px" height="28px"/>
                     </Row>
-                    <Row justifyContent="end">
+                    <Row width="259px" justifyContent="end">
                         <Label text="Pallets"/>
                         <Input {...register('pallets')} width="90px" height="28px"/>
                     </Row>
-                    <Row justifyContent="space-between">
+                    <Row>
                         <Label text="Shipper"/>
                         <Input {...register('shipper')} width="178px" height="28px"/>
                     </Row>
                     <Row justifyContent="space-between">
                         <Label text="Address"/>
-                        <TextArea {...register('shipperAddress')} width="178px" maxLength={34}/>
+                        <TextArea {...register('shipperAddress')} width="200px"/>
                     </Row>
                     <Row justifyContent="space-between">
                         <Label text="PO/PU"/>
-                        <TextArea {...register('shipperPOPU')} width="178px" maxLength={34}/>
+                        <TextArea {...register('shipperPOPU')} width="200px"/>
                     </Row>
-                    <Spacing/>
-                    <Row justifyContent="space-between">
+                    <Row>
                         <Label text="Receiver"/>
                         <Input {...register('receiver')} width="178px" height="28px"/>
                     </Row>
                     <Row justifyContent="space-between">
                         <Label text="Address"/>
-                        <TextArea {...register('receiverAddress')} width="178px" maxLength={34}/>
+                        <TextArea {...register('receiverAddress')} width="200px"/>
                     </Row>
-                    <Row justifyContent="space-between">
+                    <Row columnGap="24px">
                         <Label text="PO/PU"/>
                         <Input {...register('receiverPOPU')} width="178px" height="28px"/>
                     </Row>
-                    <Column alignItems="end">
+                    <Column width="265px" alignItems="end">
                         <div>
                             <Label text="Amount"/>
                             <Input {...register('amount')} width="178px" height="28px"/>
@@ -109,6 +107,7 @@ const PDFForm = () => {
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     rowGap: '20px',
+                    marginTop: '20px',
                 }}>
                     <Column>
                         <Label text="Pick Up Comments"/>

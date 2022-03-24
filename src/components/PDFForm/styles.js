@@ -7,35 +7,34 @@ export const Container = styled.div`
   height: 100%;
   width: 100%;
   background: linear-gradient(69.92deg, #1089BC 13.76%, #042330 140.51%);
-  padding: 32px 61px 37px 26px;
+  padding: 10px 61px 9px 26px;
 `
 
 export const InputList = styled.div`
   width: ${props => props.weight};
   display: flex;
   flex-direction: column;
-  align-items: center;
   row-gap: 24px;
 `
 
 export const Column = styled.div`
-  width: 100%;
+  width: ${props => props.width || '100%'};
   display: flex;
   flex-direction: column;
   align-items: ${props => props.alignItems};
 `
 
 export const Row = styled.div`
-  width: 100%;
+  width: ${props => props.width || '100%'};
   display: flex;
   align-items: center;
-  column-gap: 10px;
+  column-gap: ${props => props.columnGap || '10px'};
   justify-content: ${props => props.justifyContent};
 `
 
 export const DragDropWrapper = styled.div`
   width: 242px;
-  height: 137px;
+  height: 112px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -58,13 +57,13 @@ export const IconsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
   row-gap: 25px;
 `
 
 export const Sidebar = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: space-between;
   min-height: 100%
 `

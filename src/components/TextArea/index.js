@@ -15,7 +15,7 @@ const TextArea = styled.textarea`
   color: #666666;
   outline: none;
   width: ${props => props.width || '100%'};
-  height: 45px;
+  height: 72px;
   resize: none;
   overflow:hidden;
 `
