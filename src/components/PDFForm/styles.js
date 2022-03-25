@@ -14,22 +14,22 @@ export const InputList = styled.div`
   width: ${props => props.weight};
   display: flex;
   flex-direction: column;
-  row-gap: 24px;
+  row-gap: 19.5px;
 `
 
 export const Column = styled.div`
-  width: ${props => props.width || '100%'};
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: ${props => props.alignItems};
 `
 
 export const Row = styled.div`
-  width: ${props => props.width || '100%'};
+  width: 100%;
   display: flex;
   align-items: center;
-  column-gap: ${props => props.columnGap || '10px'};
-  justify-content: ${props => props.justifyContent};
+  column-gap: 10px;
+  justify-content: space-between;
 `
 
 export const DragDropWrapper = styled.div`

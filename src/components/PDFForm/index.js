@@ -58,19 +58,19 @@ const PDFForm = () => {
         <Container>
             <Sidebar>
                 <InputList>
-                    <Column width="259px">
+                    <Column>
                         <Label text="Carrier"/>
                         <Input {...register('carrier')} width="100%" height="50px"/>
                     </Column>
-                    <Row width="259px" justifyContent="end">
+                    <Row justifyContent="end">
                         <Label text="Weight"/>
                         <Input {...register('weight')} width="90px" height="28px"/>
                     </Row>
-                    <Row width="259px" justifyContent="end">
+                    <Row justifyContent="end">
                         <Label text="Pallets"/>
                         <Input {...register('pallets')} width="90px" height="28px"/>
                     </Row>
-                    <Row>
+                    <Row justifyContent="end">
                         <Label text="Shipper"/>
                         <Input {...register('shipper')} width="178px" height="28px"/>
                     </Row>
@@ -92,9 +92,9 @@ const PDFForm = () => {
                     </Row>
                     <Row columnGap="24px">
                         <Label text="PO/PU"/>
-                        <Input {...register('receiverPOPU')} width="178px" height="28px"/>
+                        <TextArea {...register('receiverPOPU')} width="200px" />
                     </Row>
-                    <Column width="265px" alignItems="end">
+                    <Column alignItems="end">
                         <div>
                             <Label text="Amount"/>
                             <Input {...register('amount')} width="178px" height="28px"/>
